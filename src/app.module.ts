@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { validateEnv } from './config/env.validation';
-import { AppController } from './app.controller';
 
 // Feature modules
 import { AuthModule } from './auth/auth.module';
@@ -45,6 +44,5 @@ import { ReliabilityModule } from './reliability/reliability.module';
     // Ops / SRE style module (health checks etc.)
     ReliabilityModule,
   ],
-  controllers: [AppController],
 })
 export class AppModule {}

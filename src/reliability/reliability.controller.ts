@@ -10,13 +10,23 @@ import {
 } from "@nestjs/common";
 import { ReliabilityService } from "./reliability.service";
 
-@Controller()
+@Controller() // root + health + payments endpoints
 export class ReliabilityController {
   constructor(private readonly svc: ReliabilityService) {}
 
+  @Get()
+  root() {
+    return {
+      ok: true,
+      service: "nestjs-reliability-demo",
+      docs: "/docs",
+      health: "/health",
+    };
+  }
+
   @Get("health")
   health() {
-    return this.svc.health();
+    return this.svc.health(); // keep your service-driven health
   }
 
   @Post("payments/intents")
@@ -52,6 +62,7 @@ export class ReliabilityController {
     if (!body?.intentId?.trim() || !body?.reference?.trim()) {
       return { ok: false, error: "missing_intentId_or_reference" };
     }
+
     return this.svc.verifyIntent({
       intentId: body.intentId.trim(),
       reference: body.reference.trim(),
